@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0d0d0d;
+  color: #f2f2f2;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  
+  border-bottom: 3px solid #ff0033;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff0033;
+  text-transform: uppercase;
+}
+
+.nav-links a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #f2f2f2;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ff0033;
+  text-shadow: 0 0 10px #ff0033;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ff0033;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+              url(../IMAGES/LAPY.jpg) no-repeat center/cover;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #ff0033;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ddd;
+}
+
+.cta {
+  padding: 0.8rem 2rem;
+  background: #ff0033;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.cta:hover {
+  background: #fff;
+  color: #ff0033;
+  box-shadow: 0 0 15px #ff0033;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #111111;
+  border-top: 3px solid #ff0033;
+  font-size: 0.9rem;
+  color: #888;
+ 
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #1111119c;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 200px;
+    border-left: 3px solid #ff0033;
+    border-radius: 10px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}

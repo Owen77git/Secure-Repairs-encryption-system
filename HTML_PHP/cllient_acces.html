@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Client Access - SecureRepair Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #0d0d0d; color: #f2f2f2; min-height: 100vh; }
+        
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 3rem; background: #111; border-bottom: 3px solid #ff0033;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #ff0033; }
+        
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .card {
+            background: #111;
+            padding: 2rem;
+            border: 2px solid #ff0033;
+            border-radius: 10px;
+        }
+        
+        h1 { color: #ff0033; margin-bottom: 1.5rem; text-align: center; }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ff0033;
+            font-weight: bold;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #333;
+            border-radius: 5px;
+            background: #222;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: #ff0033;
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: 0.3s;
+            margin-top: 1rem;
+        }
+        
+        button:hover {
+            background: #fff;
+            color: #ff0033;
+            box-shadow: 0 0 15px #ff0033;
+        }
+        
+        .client-display {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #1a1a1a;
+            border: 2px dashed #ff0033;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .client-info {
+            margin: 1rem 0;
+        }
+        
+        .password-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff00;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #000;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .message {
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .success { background: rgba(0, 255, 0, 0.1); border: 1px solid #00ff00; color: #00ff00; }
+        .error { background: rgba(255, 0, 0, 0.1); border: 1px solid #ff0033; color: #ff0033; }
+        
+        .active-clients {
+            margin-top: 2rem;
+        }
+        
+        .client-item {
+            background: #1a1a1a;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 5px;
+            border-left: 4px solid #ff0033;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">⚡ SecureRepair Admin</div>
+        <nav class="nav-links">
+            <a href="create_client.html" class="active">Create Client Access</a>
+            <a href="cctv-monitoring.html">CCTV Live</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Create Client Access</h1>
+        
+        <div class="card">
+            <form id="clientForm">
+                <div class="form-group">
+                    <label for="clientEmail">Client Email</label>
+                    <input type="email" id="clientEmail" required placeholder="client@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="hoursValid">Access Duration (Hours)</label>
+                    <select id="hoursValid" required>
+                        <option value="1">1 Hour</option>
+                        <option value="2">2 Hours</option>
+                        <option value="4">4 Hours</option>
+                        <option value="8">8 Hours</option>
+                        <option value="24">24 Hours</option>
+                        <option value="48">48 Hours</option>
+                        <option value="168">1 Week</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Generate Client Access</button>
+            </form>
+            
+            <div class="client-display" id="clientDisplay">
+                <h3>Client Access Created Successfully!</h3>
+                <div class="client-info">
+                    <strong>Email:</strong> <span id="displayEmail"></span>
+                </div>
+                <div class="client-info">
+                    <strong>Expires:</strong> <span id="displayExpires"></span>
+                </div>
+                <div class="password-display" id="displayPassword"></div>
+                <p><strong>Share this password with your client. They can use it to access the CCTV feed.</strong></p>
+            </div>
+            
+            <div id="message" class="message"></div>
+        </div>
+
+        <div class="active-clients">
+            <h3>Active Client Accesses</h3>
+            <div id="clientsList"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('clientForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('clientEmail').value.trim();
+            const hours = document.getElementById('hoursValid').value;
+            const messageDiv = document.getElementById('message');
+            
+            // Clear previous messages
+            messageDiv.style.display = 'none';
+            messageDiv.className = 'message';
+            
+            try {
+                const response = await fetch('create_client.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        client_email: email,
+                        hours_valid: hours
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Display the generated access
+                    document.getElementById('displayEmail').textContent = email;
+                    document.getElementById('displayExpires').textContent = result.expires_at;
+                    document.getElementById('displayPassword').textContent = result.password;
+                    document.getElementById('clientDisplay').style.display = 'block';
+                    
+                    // Show success message
+                    messageDiv.textContent = 'Client access created successfully!';
+                    messageDiv.className = 'message success';
+                    messageDiv.style.display = 'block';
+                    
+                    // Refresh clients list
+                    loadActiveClients();
+                    
+                    // Clear form
+                    document.getElementById('clientForm').reset();
+                } else {
+                    throw new Error(result.message || 'Failed to create client access');
+                }
+            } catch (error) {
+                messageDiv.textContent = 'Error: ' + error.message;
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+            }
+        });
+
+        // Load active clients
+        async function loadActiveClients() {
+            try {
+                const response = await fetch('get_clients.php');
+                const clients = await response.json();
+                
+                const clientsList = document.getElementById('clientsList');
+                clientsList.innerHTML = '';
+                
+                if (clients.length === 0) {
+                    clientsList.innerHTML = '<p>No active clients</p>';
+                    return;
+                }
+                
+                clients.forEach(client => {
+                    const clientDiv = document.createElement('div');
+                    clientDiv.className = 'client-item';
+                    clientDiv.innerHTML = `
+                        <strong>${client.client_email}</strong><br>
+                        Password: ${client.password}<br>
+                        Expires: ${client.expires_at}<br>
+                        Logins: ${client.login_count}
+                    `;
+                    clientsList.appendChild(clientDiv);
+                });
+            } catch (error) {
+                console.error('Error loading clients:', error);
+            }
+        }
+
+        // Load clients on page load
+        window.addEventListener('load', loadActiveClients);
+    </script>
+</body>
+</html>

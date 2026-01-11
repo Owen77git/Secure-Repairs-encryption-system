@@ -1,0 +1,63 @@
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background: #0d0d0d; color: #f2f2f2; height:100uvh; }
+
+.navbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 3rem; background: #111; border-bottom: 3px solid #ff0033;
+}
+.logo { font-size: 1.5rem; font-weight: bold; color: #ff0033; }
+.nav-links a {
+  margin: 0 1rem; text-decoration: none; color: #f2f2f2; font-weight: bold; transition: 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color: #ff0033; text-shadow: 0 0 10px #ff0033; }
+.menu-toggle { display: none; font-size: 2rem; cursor: pointer; color: #ff0033; }
+
+.dashboard { display: flex; min-height: calc(100vh - 80px); }
+.sidebar {
+  width: 240px; background: #111; padding: 2rem 1rem;
+  border-right: 3px solid #ff0033; transition: 0.3s;
+}
+.sidebar h2 { color: #ff0033; margin-bottom: 1rem; }
+.sidebar ul { list-style: none; }
+.sidebar li {
+  padding: 0.8rem; cursor: pointer; border-bottom: 1px solid #333;
+  transition: 0.3s; border-radius: 5px;
+}
+.sidebar li:hover { background: #ff0033; color: #fff; transform: translateX(5px); }
+
+.content { flex: 1; padding: 2rem; }
+h1 { color: #ff0033; margin-bottom: 1rem; }
+.card {
+  background: #111; padding: 1.5rem; border: 2px solid #ff0033;
+  border-radius: 10px; margin-bottom: 1.5rem;
+}
+
+form { display: flex; flex-direction: column; max-width: 450px; }
+form label { margin: 0.5rem 0 0.2rem; }
+form input, textarea {
+  padding: 0.6rem; margin-bottom: 1rem; border: none; border-radius: 5px;
+  background: #222; color: #fff;
+}
+form textarea { min-height: 100px; resize: vertical; }
+button {
+  background: #ff0033; color: #fff; padding: 0.7rem; border: none; border-radius: 5px;
+  cursor: pointer; font-weight: bold; transition: 0.3s;
+}
+button:hover { background: #fff; color: #ff0033; box-shadow: 0 0 15px #ff0033; }
+
+.cctv-feed, .logs-box, .alerts-box {
+  border: 2px dashed #ff0033; padding: 2rem; margin-top: 1rem;
+  text-align: center; border-radius: 6px; color: #aaa;
+}
+
+footer {
+  text-align: center; padding: 1rem; background: #111;
+  border-top: 3px solid #ff0033; color: #888;
+  margin-bottom: 0px;
+}
+
+@media (max-width: 768px) {
+  .dashboard { flex-direction: column; }
+  .sidebar { width: 100%; border-right: none; border-bottom: 3px solid #ff0033; }
+}

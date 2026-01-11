@@ -1,0 +1,67 @@
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+              url(../IMAGES/LAPY.jpg) no-repeat center/cover;
+}
+.header {
+  text-align: center;
+  padding: 2rem;
+  background: #111;
+  border-bottom: 3px solid #ff0033;
+}
+.header h1 { color: #ff0033; margin-bottom: 0.5rem; }
+.header p { color: #aaa; }
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem 10%;
+}
+
+.left-panel, .right-panel {
+  background: #111;
+  padding: 1.5rem;
+  border: 2px solid #ff0033;
+  border-radius: 10px;
+}
+.left-panel h2, .right-panel h2 { color: #ff0033; margin-bottom: 1rem; }
+label { display: block; margin: 0.5rem 0 0.2rem; }
+input, textarea {
+  width: 100%; padding: 0.8rem; margin-bottom: 1rem;
+  border: none; border-radius: 5px;
+  background: #222; color: #fff;
+}
+input:focus, textarea:focus { outline: 2px solid #ff0033; }
+
+.tools-list {
+  display: flex; flex-direction: column;
+  gap: 0.8rem;
+}
+.tools-list label {
+  background: #1a1a1a;
+  padding: 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.tools-list label:hover { background: #ff0033; color: #fff; }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #111;
+  border-top: 3px solid #ff0033;
+}
+button {
+  background: #ff0033; color: #fff; padding: 0.8rem 1.5rem;
+  border: none; border-radius: 5px; font-weight: bold; cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background: #fff; color: #ff0033; box-shadow: 0 0 15px #ff0033; }
+
+@media (max-width: 900px) {
+  .dashboard { grid-template-columns: 1fr; }
+}
